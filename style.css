@@ -1,0 +1,385 @@
+/* === 1. Global & Backgrounds === */
+:root {
+  --primary-color: #00f7ff;
+}
+
+.hero-section {
+  position: relative;
+  width: 100%; /* changed from 100vw → avoids overflow on mobiles */
+  height: 100vh;
+  background:  linear-gradient(135deg, #0b0c1a, #14182c);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  font-family: 'Inter', sans-serif;
+  color: #fff;
+  padding: 0 1rem; /* reduced padding for small devices */
+}
+
+.radial-bg,
+.hero::before {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.radial-bg {
+  width: 900px;
+  height: 900px;
+  background: radial-gradient(circle, rgba(0, 247, 255, 0.1) 0%, transparent 70%);
+  filter: blur(100px);
+}
+
+.hero::before {
+  content: '';
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle at center, #00f0ff88, transparent);
+  filter: blur(100px);
+  top: -50px;
+}
+
+/* === 2. Hero Content Layout === */
+.hero-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4rem;
+  max-width: 1400px;
+  width: 100%;
+  padding: 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-side {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.hero-side.right {
+  align-items: flex-start;
+  text-align: left;
+}
+
+/* === 3. Hero Title & Text === */
+.hero-title {
+  font-size: 3rem;
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 25px;
+  background: linear-gradient(90deg, #00b4ff, #007bff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 15px rgba(0, 183, 255, 0.3);
+}
+
+.hero-title span {
+  background: linear-gradient(90deg, #ffffff, #00f7ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+.quote-subtitle {
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: #bdb9ff;
+  margin-bottom: 15px;
+}
+
+.quote-desc {
+  font-size: 1.1rem;
+  color: #e0e0e0;
+  margin-bottom: 20px;
+  text-align: justify; 
+}
+
+.hero-subtext {
+  font-size: 1rem;
+  color: #aaa;
+  margin-bottom: 1.5rem;
+  max-width: 300px;
+}
+
+.highlight-text {
+  color: var(--primary-color);
+  font-weight: 600;
+  text-shadow: 0 0 5px rgba(0, 247, 255, 0.4);
+}
+
+/* === 4. Button === */
+.quote-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 16px 32px;
+  background-color: #fff;
+  color: #1a73e8;
+  font-weight: 700;
+  font-size: 1rem;
+  font-family: 'Open Sans', sans-serif;
+  text-transform: uppercase;
+  text-decoration: none;
+  letter-spacing: 0.5px;
+  overflow: hidden;
+  transition: color 0.4s ease;
+  z-index: 1;
+}
+
+.quote-btn span {
+  position: relative;
+  z-index: 2;
+  transition: color 0.3s ease;
+}
+
+.quote-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, #1a73e8 0%, #4285f4 100%);
+  transition: left 0.4s ease;
+  z-index: 0;
+}
+
+.quote-btn::after {
+  content: "\2192";
+  margin-left: 10px;
+  font-size: 1.1rem;
+  transition: transform 0.3s ease;
+  position: relative;
+  z-index: 2;
+}
+
+.quote-btn:hover::before {
+  left: 0;
+}
+
+.quote-btn:hover,
+.quote-btn:hover span {
+  color: #fff;
+}
+
+.quote-btn:hover::after {
+  transform: translateX(4px);
+}
+
+/* === 5. Hover Video Reveal === */
+.hover-box {
+  width: 360px;
+  aspect-ratio: 4/5;
+  border-radius: 16px;
+  position: relative;
+  overflow: hidden;
+  background-color: #1a1a1a;
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 50px rgba(0, 247, 255, 0.1);
+  border: 2px solid rgba(0, 240, 255, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.4s ease;
+  cursor: pointer;
+}
+
+.hover-box:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 20px rgba(0, 247, 255, 0.3), 0 0 50px rgba(0, 247, 255, 0.15);
+}
+
+.preview-image,
+.preview-video {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.6s ease-in-out;
+}
+
+.preview-image { z-index: 2; }
+.preview-video { z-index: 1; opacity: 0; pointer-events: none; }
+
+.hover-box:hover .preview-video { opacity: 1; }
+.hover-box:hover .preview-image { opacity: 0; }
+
+/* === 6. Scroll Indicator === */
+.scroll-indicator {
+  position: absolute;
+  bottom: 0px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  font-family: "Poppins", monospace;
+  z-index: 10;
+}
+
+.scroll-text {
+  font-size: 0.9rem;
+  color: #00f0ff;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-shadow: 0 0 10px rgba(0, 240, 255, 0.6),
+               0 0 20px rgba(0, 240, 255, 0.3);
+  display: block;
+  margin-bottom: 8px;
+  animation: fadeBlink 2s infinite;
+}
+
+.scroll-line {
+  width: 2px;
+  height: 45px;
+  margin: 0 auto;
+  background: linear-gradient(180deg, #00f0ff 0%, transparent 100%);
+  border-radius: 2px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0, 240, 255, 0.6);
+}
+
+.scroll-dot {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  background: #00f0ff;
+  border-radius: 50%;
+  transform: translateX(-50%);
+  animation: scrollDotAnim 1.5s infinite;
+  box-shadow: 0 0 12px #00f0ff, 0 0 25px #00f0ff;
+}
+
+/* Animations */
+@keyframes scrollDotAnim {
+  0% { top: 0; opacity: 0; }
+  30% { opacity: 1; }
+  70% { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+@keyframes fadeBlink {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
+
+/* === 7. Animations on Load === */
+.fade-in-left,
+.fade-in-right,
+.fade-in-up {
+  opacity: 0;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  animation-timing-function: ease-in-out;
+}
+
+.fade-in-left { animation-name: fadeInLeft; }
+.fade-in-right { animation-name: fadeInRight; }
+.fade-in-up { animation-name: fadeInUp; }
+
+@keyframes fadeInLeft {
+  from { opacity: 0; transform: translateX(-30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes fadeInRight {
+  from { opacity: 0; transform: translateX(30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Staggered Hero Load */
+.hero-container > * {
+  animation: heroStagger 1.2s ease-out forwards;
+  opacity: 0;
+}
+.hero-container > *:nth-child(1) { animation-delay: 0.3s; }
+.hero-container > *:nth-child(2) { animation-delay: 0.6s; }
+.hero-container > *:nth-child(3) { animation-delay: 0.9s; }
+.hero-container > *:nth-child(4) { animation-delay: 1.2s; }
+
+@keyframes heroStagger {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* === 8. Tech Icons === */
+.tech-icons img {
+  width: 30px;
+  margin: 8px;
+  opacity: 0.7;
+  filter: drop-shadow(0 0 2px #00f7ff55);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.tech-icons img:hover {
+  opacity: 1;
+  transform: scale(1.1) translateY(-5px) rotate(2deg);
+  filter: drop-shadow(0 0 5px #00f0ff);
+}
+
+/* === 9. Social Links === */
+.socials a {
+  display: block;
+  color: var(--primary-color);
+  font-size: 1.4rem;
+  margin: 8px 0;
+  transition: color 0.3s ease;
+}
+.socials a:hover { color: #fff; }
+
+.vertical-role {
+  writing-mode: vertical-rl;
+  font-size: 0.9rem;
+  letter-spacing: 3px;
+  margin-top: 2rem;
+  color: #888;
+}
+
+/* ============================= */
+/* === RESPONSIVE MEDIA QUERIES === */
+/* ============================= */
+@media (max-width: 360px) {
+  .hover-box {
+    width: 200px;
+    height: 260px;
+    margin-top: 100px;
+  }
+
+  .hero-title { font-size: 22px; }
+  .quote-subtitle { font-size: 10px; }
+  .tech-icons img { width: 22px; }
+
+  /* socials beside hover-box */
+  .hero-side.left {
+    position: absolute;
+    top: 50%;
+    left: -25px;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .hero-side.left .socials a {
+    font-size: 14px;
+  }
+
+  .vertical-role {
+    font-size: 9px;
+    letter-spacing: 2px;
+    margin-top: 8px;
+    color: var(--primary-color);
+  }
+}
