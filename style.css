@@ -99,7 +99,6 @@
   font-size: 1.1rem;
   color: #e0e0e0;
   margin-bottom: 20px;
-  text-align: justify; 
 }
 
 .hero-subtext {
@@ -383,3 +382,4 @@
     color: var(--primary-color);
   }
 }
+
